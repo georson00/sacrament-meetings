@@ -26,7 +26,7 @@ export default async function CurrentMeetingPage() {
   const sundayDate = today.toISOString().slice(0, 10);
 
   // Find the meeting for that Sunday
-  const meetings = getMeetings(sundayDate);
+  const meetings = await getMeetings(sundayDate);
   const meeting = meetings[0];
 
   if (meeting) {
