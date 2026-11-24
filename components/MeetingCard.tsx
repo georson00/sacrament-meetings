@@ -1,6 +1,8 @@
 
 import Link from 'next/link';
 import type { SacramentMeeting } from '@/lib/types';
+import DeleteMeetingButton from './DeleteMeetingButton';
+
 
 interface MeetingCardProps {
   meeting: SacramentMeeting;
@@ -19,9 +21,7 @@ export default function MeetingCard({ meeting }: MeetingCardProps) {
   return (
     <article className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
       <div className="mb-4">
-        <h2 className="text-xl font-semibold text-gray-900">
-          {formattedDate}
-        </h2>
+        <h2 className="text-xl font-semibold text-gray-900">{formattedDate}</h2>
 
         <p className="mt-1 text-sm capitalize text-gray-500">
           {meeting.meetingType} Sacrament Meeting
@@ -30,34 +30,48 @@ export default function MeetingCard({ meeting }: MeetingCardProps) {
 
       <div className="space-y-2 text-sm text-gray-700">
         <p>
-          <span className="font-semibold">Presiding:</span>{' '}
-          {meeting.presiding}
+          <span className="font-semibold">Presiding:</span> {meeting.presiding}
         </p>
 
         <p>
-          <span className="font-semibold">Conducting:</span>{' '}
+          <span className="font-semibold">Conducting:</span>{" "}
           {meeting.conducting}
         </p>
 
         <p>
-          <span className="font-semibold">Opening Hymn:</span>{' '}
-          #{meeting.openingHymn.number} - {meeting.openingHymn.title}
+          <span className="font-semibold">Opening Hymn:</span> #
+          {meeting.openingHymn.number} - {meeting.openingHymn.title}
         </p>
 
         <p>
-          <span className="font-semibold">Speakers:</span>{' '}
-          {meeting.speakers.filter(
-            speaker => speaker.type === 'speaker'
-          ).length}
+          <span className="font-semibold">Speakers:</span>{" "}
+          {
+            meeting.speakers.filter((speaker) => speaker.type === "speaker")
+              .length
+          }
         </p>
       </div>
 
-      <Link
-        href={`/meetings/${meeting.id}`}
-        className="mt-5 inline-block rounded-md bg-blue-700 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-800"
-      >
-        View Meeting Details
-      </Link>
+      <div className="mt-5 flex flex-wrap items-center gap-3">
+        <Link
+          href={`/meetings/${meeting.id}`}
+          className="inline-block rounded-md bg-blue-700 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-800"
+        >
+          View Meeting Details
+        </Link>
+
+        <Link
+          href={`/meetings/${meeting.id}/edit`}
+          className="inline-block rounded-md border border-gray-400 bg-white px-4 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-100"
+        >
+          Edit
+        </Link>
+
+        <DeleteMeetingButton
+          meetingId={meeting.id}
+          meetingDate={formattedDate}
+        />
+      </div>
     </article>
   );
 }

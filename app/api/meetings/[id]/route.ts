@@ -1,6 +1,6 @@
 
 import { NextResponse } from 'next/server';
-import { getMeetingById } from '@/lib/meeting-db';
+import { getMeetingById } from '@/lib/meetings-db';
 
 interface RouteContext {
   params: Promise<{ id: string }>;

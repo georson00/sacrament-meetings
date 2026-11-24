@@ -1,18 +1,17 @@
-
-import { redirect } from 'next/navigation';
-import { connection } from 'next/server';
-import { getMeetings } from '@/lib/meeting-db';
+import { redirect } from "next/navigation";
+import { connection } from "next/server";
+import { getMeetings } from "@/lib/meetings-db";
 
 export default async function CurrentMeetingPage() {
   // Ensure the date is calculated at request time
   await connection();
 
   // Get today's date in the ward's timezone
-  const todayString = new Intl.DateTimeFormat('en-CA', {
-    timeZone: 'America/New_York',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
+  const todayString = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/New_York",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
   }).format(new Date());
 
   // Create a UTC date from the calendar date
@@ -34,5 +33,5 @@ export default async function CurrentMeetingPage() {
   }
 
   // No meeting found for the current Sunday
-  redirect('/meetings');
+  redirect("/meetings");
 }
